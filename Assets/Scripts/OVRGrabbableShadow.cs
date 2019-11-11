@@ -37,4 +37,12 @@ public class OVRGrabbableShadow : OVRGrabbable
 
         base.GrabEnd(linearVelocity, angularVelocity);
     }
+
+    public void Ungrab()
+    {
+        if (m_grabbedBy != null)
+        {
+            m_grabbedBy.ForceRelease(this);
+        }
+    }
 }

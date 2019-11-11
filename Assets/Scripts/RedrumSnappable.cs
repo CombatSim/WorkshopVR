@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class RedrumSnappable : MonoBehaviour
 {
+    public GameObject screws;
     private RedrumSnap redrumSnap;
     private bool snapped;
-    private OVRGrabbable ovrGrabbable;
+    private OVRGrabbableShadow ovrGrabbable;
 
     // Start is called before the first frame update
     void Start()
     {
         this.redrumSnap = transform.parent.GetComponent<RedrumSnap>();
-        this.ovrGrabbable = GetComponent<OVRGrabbable>();
+        this.ovrGrabbable = GetComponent<OVRGrabbableShadow>();
+
+        if (screws)
+        {
+            screws.SetActive(false);
+        }
 
         this.snapped = false;
     }
@@ -26,10 +32,16 @@ public class RedrumSnappable : MonoBehaviour
         {
             transform.localPosition = new Vector3(0, 0, 0);
             transform.transform.localEulerAngles = new Vector3(0, -180, 0);
-            this.ovrGrabbable.grabbedBy.ForceRelease(this.ovrGrabbable);
-            
+
+            this.ovrGrabbable.Ungrab();
+
             this.redrumSnap.SnapChild(this.name);
             this.snapped = true;
+
+            if (screws)
+            {
+                screws.SetActive(true);
+            }
         }
     }
 }
