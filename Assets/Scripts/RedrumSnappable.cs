@@ -5,6 +5,7 @@ using UnityEngine;
 public class RedrumSnappable : MonoBehaviour
 {
     public GameObject screws;
+    public float snapDistance = 10f;
     private RedrumSnap redrumSnap;
     private bool snapped;
     private OVRGrabbableShadow ovrGrabbable;
@@ -28,7 +29,7 @@ public class RedrumSnappable : MonoBehaviour
     {
         float dist = Vector3.Distance(new Vector3(0, 0, 0), transform.localPosition);
 
-        if (dist < 10f && this.redrumSnap.CanSnapChild(this.name))
+        if (dist < this.snapDistance && this.redrumSnap.CanSnapChild(this.name))
         {
             transform.localPosition = new Vector3(0, 0, 0);
             transform.transform.localEulerAngles = new Vector3(0, -180, 0);
