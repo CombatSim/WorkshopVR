@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RedrumSnap : MonoBehaviour
+public class RedrumSnap : Snapper
 {
     public static bool MancalEsq_Placed;
     public static bool MancalDir_Placed;
@@ -54,13 +54,13 @@ public class RedrumSnap : MonoBehaviour
 
     }
 
-    public bool CanSnapChild(string name)
+    override public bool CanSnapChild(string name)
     {
 
         return true;
     }
 
-    public void SnapChild(string name)
+    override public void SnapChild(string name)
     {
         if (name == "MancalDir")
         {

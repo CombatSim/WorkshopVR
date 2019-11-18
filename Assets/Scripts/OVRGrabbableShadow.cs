@@ -2,50 +2,55 @@
 
 public class OVRGrabbableShadow : OVRGrabbable
 {
-    public GameObject shadow;
+    public GameObject shadowOk;
+    public GameObject shadowNope;
+    public GameObject upInd;
 
-    private MeshRenderer shadowRenderer = null;
-    private MeshRenderer[] shadowRenderers = null;
+    private Snapper snapper;
 
     protected override void Start()
     {
-        if (this.shadow.transform.childCount > 0)
+        if (this.shadowOk)
         {
-            this.shadowRenderers = this.shadow.GetComponentsInChildren<MeshRenderer>();
-        }
-        else
-        {
-            this.shadowRenderer = this.shadow.GetComponent<MeshRenderer>();
+            this.shadowOk.SetActive(false);
         }
 
+        if (this.shadowNope)
+        {
+            this.shadowNope.SetActive(false);
+        }
 
-        if (this.shadowRenderer)
+        if (this.upInd)
         {
-            this.shadowRenderer.enabled = false;
+            this.upInd.SetActive(false);
         }
-        else if (this.shadowRenderers != null)
-        {
-            foreach (var sr in this.shadowRenderers)
-            {
-                sr.enabled = false;
-            }
-        }
+
+        this.snapper = transform.parent.GetComponent<Snapper>();
 
         base.Start();
     }
 
     public override void GrabBegin(OVRGrabber hand, Collider grabPoint)
     {
-        if (this.shadowRenderer)
+        bool canSnap = false;
+
+        if (this.snapper)
         {
-            this.shadowRenderer.enabled = true;
+            canSnap = this.snapper.CanSnapChild(this.name);
         }
-        else if (this.shadowRenderers != null)
+
+        if (this.shadowOk && canSnap)
         {
-            foreach (var sr in this.shadowRenderers)
-            {
-                sr.enabled = true;
-            }
+            this.shadowOk.SetActive(true);
+        }
+        else if (this.shadowNope && !canSnap)
+        {
+            this.shadowNope.SetActive(true);
+        }
+
+        if (this.upInd)
+        {
+            this.upInd.SetActive(true);
         }
 
         base.GrabBegin(hand, grabPoint);
@@ -53,16 +58,19 @@ public class OVRGrabbableShadow : OVRGrabbable
 
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
-        if (this.shadowRenderer)
+        if (this.shadowOk)
         {
-            this.shadowRenderer.enabled = false;
+            this.shadowOk.SetActive(false);
         }
-        else if (this.shadowRenderers != null)
+
+        if (this.shadowNope)
         {
-            foreach (var sr in this.shadowRenderers)
-            {
-                sr.enabled = false;
-            }
+            this.shadowNope.SetActive(false);
+        }
+
+        if (this.upInd)
+        {
+            this.upInd.SetActive(false);
         }
 
         base.GrabEnd(linearVelocity, angularVelocity);

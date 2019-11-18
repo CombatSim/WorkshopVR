@@ -6,7 +6,7 @@ public class RedrumSnappable : MonoBehaviour
 {
     public GameObject screws;
     public float snapDistance = 10f;
-    private RedrumSnap redrumSnap;
+    private Snapper snapper;
     private bool snapped;
     private OVRGrabbableShadow ovrGrabbable;
     private Rigidbody rb;
@@ -15,7 +15,7 @@ public class RedrumSnappable : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.redrumSnap = transform.parent.GetComponent<RedrumSnap>();
+        this.snapper = transform.parent.GetComponent<Snapper>();
         this.ovrGrabbable = GetComponent<OVRGrabbableShadow>();
         this.rb = GetComponent<Rigidbody>();
         this.bc = GetComponent<BoxCollider>();
@@ -26,6 +26,8 @@ public class RedrumSnappable : MonoBehaviour
         }
 
         this.snapped = false;
+
+        print("Starting Snappable for " + this.name);
     }
 
     // Update is called once per frame
@@ -39,12 +41,12 @@ public class RedrumSnappable : MonoBehaviour
         float dist = Vector3.Distance(new Vector3(0, 0, 0), transform.localPosition);
         float angularDist = Vector3.Distance(new Vector3(0, 0, 0), transform.transform.localEulerAngles);
 
-        if (dist < this.snapDistance && angularDist < 10 && this.redrumSnap.CanSnapChild(this.name))
+        if (dist < this.snapDistance && angularDist < 10 && this.snapper.CanSnapChild(this.name))
         {
             transform.localPosition = new Vector3(0, 0, 0);
             transform.transform.localEulerAngles = new Vector3(0, 0, 0);
 
-            this.redrumSnap.SnapChild(this.name);
+            this.snapper.SnapChild(this.name);
             this.snapped = true;
 
             this.ovrGrabbable.Ungrab();
