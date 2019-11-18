@@ -4,15 +4,31 @@ public class OVRGrabbableShadow : OVRGrabbable
 {
     public GameObject shadow;
 
-    private MeshRenderer shadowRenderer;
+    private MeshRenderer shadowRenderer = null;
+    private MeshRenderer[] shadowRenderers = null;
 
     protected override void Start()
     {
-        this.shadowRenderer = this.shadow.GetComponent<MeshRenderer>();
+        if (this.shadow.transform.childCount > 0)
+        {
+            this.shadowRenderers = this.shadow.GetComponentsInChildren<MeshRenderer>();
+        }
+        else
+        {
+            this.shadowRenderer = this.shadow.GetComponent<MeshRenderer>();
+        }
+
 
         if (this.shadowRenderer)
         {
             this.shadowRenderer.enabled = false;
+        }
+        else if (this.shadowRenderers != null)
+        {
+            foreach (var sr in this.shadowRenderers)
+            {
+                sr.enabled = false;
+            }
         }
 
         base.Start();
@@ -24,6 +40,13 @@ public class OVRGrabbableShadow : OVRGrabbable
         {
             this.shadowRenderer.enabled = true;
         }
+        else if (this.shadowRenderers != null)
+        {
+            foreach (var sr in this.shadowRenderers)
+            {
+                sr.enabled = true;
+            }
+        }
 
         base.GrabBegin(hand, grabPoint);
     }
@@ -33,6 +56,13 @@ public class OVRGrabbableShadow : OVRGrabbable
         if (this.shadowRenderer)
         {
             this.shadowRenderer.enabled = false;
+        }
+        else if (this.shadowRenderers != null)
+        {
+            foreach (var sr in this.shadowRenderers)
+            {
+                sr.enabled = false;
+            }
         }
 
         base.GrabEnd(linearVelocity, angularVelocity);

@@ -11,7 +11,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/workshop-test.unity
     guid: 1350cec010f12c3499f0634abf929ebd
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/workshop-test2.unity
     guid: 930425b9d5dc32546997f40f233b047a
+  - enabled: 1
+    path: Assets/Scenes/workshop-test5.unity
+    guid: a756bab118ee42e44aaffe644596ca77
   m_configObjects: {}

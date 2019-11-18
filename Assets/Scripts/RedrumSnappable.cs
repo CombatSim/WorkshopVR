@@ -9,12 +9,16 @@ public class RedrumSnappable : MonoBehaviour
     private RedrumSnap redrumSnap;
     private bool snapped;
     private OVRGrabbableShadow ovrGrabbable;
+    private Rigidbody rb;
+    private BoxCollider bc;
 
     // Start is called before the first frame update
     void Start()
     {
         this.redrumSnap = transform.parent.GetComponent<RedrumSnap>();
         this.ovrGrabbable = GetComponent<OVRGrabbableShadow>();
+        this.rb = GetComponent<Rigidbody>();
+        this.bc = GetComponent<BoxCollider>();
 
         if (screws)
         {
@@ -27,17 +31,35 @@ public class RedrumSnappable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float dist = Vector3.Distance(new Vector3(0, 0, 0), transform.localPosition);
+        if (this.snapped)
+        {
+            return;
+        }
 
-        if (dist < this.snapDistance && this.redrumSnap.CanSnapChild(this.name))
+        float dist = Vector3.Distance(new Vector3(0, 0, 0), transform.localPosition);
+        float angularDist = Vector3.Distance(new Vector3(0, 0, 0), transform.transform.localEulerAngles);
+
+        if (dist < this.snapDistance && angularDist < 10 && this.redrumSnap.CanSnapChild(this.name))
         {
             transform.localPosition = new Vector3(0, 0, 0);
-            transform.transform.localEulerAngles = new Vector3(0, -180, 0);
-
-            this.ovrGrabbable.Ungrab();
+            transform.transform.localEulerAngles = new Vector3(0, 0, 0);
 
             this.redrumSnap.SnapChild(this.name);
             this.snapped = true;
+
+            this.ovrGrabbable.Ungrab();
+            this.ovrGrabbable.enabled = false;
+
+            if (this.bc)
+            {
+                this.bc.enabled = false;
+            }
+
+            if (this.rb)
+            {
+                this.rb.useGravity = false;
+                this.rb.isKinematic = true;
+            }
 
             if (screws)
             {
