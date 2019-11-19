@@ -5,7 +5,7 @@ using UnityEngine;
 public class RedrumSnappable : MonoBehaviour
 {
     public GameObject screws;
-    public float snapDistance = 10f;
+    public float snapDistance = 0.1f;
     private Snapper snapper;
     private bool snapped;
     private OVRGrabbableShadow ovrGrabbable;

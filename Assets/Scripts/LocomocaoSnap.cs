@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class LocomocaoSnap : Snapper
 {
-    public static bool roda;
-    public static bool cubo;
-    public static bool calota;
-    public static bool motor;
+    private bool roda;
+    private bool cubo;
+    private bool calota;
+    private bool motor;
 
     // Start is called before the first frame update
     void Start()
