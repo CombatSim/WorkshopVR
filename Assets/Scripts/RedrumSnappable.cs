@@ -5,16 +5,20 @@ using UnityEngine;
 public class RedrumSnappable : MonoBehaviour
 {
     public GameObject screws;
-    public float snapDistance = 10f;
-    private RedrumSnap redrumSnap;
+    public float snapDistance = 0.1f;
+    private Snapper snapper;
     private bool snapped;
     private OVRGrabbableShadow ovrGrabbable;
+    private Rigidbody rb;
+    private BoxCollider bc;
 
     // Start is called before the first frame update
     void Start()
     {
-        this.redrumSnap = transform.parent.GetComponent<RedrumSnap>();
+        this.snapper = transform.parent.GetComponent<Snapper>();
         this.ovrGrabbable = GetComponent<OVRGrabbableShadow>();
+        this.rb = GetComponent<Rigidbody>();
+        this.bc = GetComponent<BoxCollider>();
 
         if (screws)
         {
@@ -22,22 +26,42 @@ public class RedrumSnappable : MonoBehaviour
         }
 
         this.snapped = false;
+
+        print("Starting Snappable for " + this.name);
     }
 
     // Update is called once per frame
     void Update()
     {
-        float dist = Vector3.Distance(new Vector3(0, 0, 0), transform.localPosition);
+        if (this.snapped)
+        {
+            return;
+        }
 
-        if (dist < this.snapDistance && this.redrumSnap.CanSnapChild(this.name))
+        float dist = Vector3.Distance(new Vector3(0, 0, 0), transform.localPosition);
+        float angularDist = Vector3.Distance(new Vector3(0, 0, 0), transform.transform.localEulerAngles);
+
+        if (dist < this.snapDistance && angularDist < 10 && this.snapper.CanSnapChild(this.name))
         {
             transform.localPosition = new Vector3(0, 0, 0);
-            transform.transform.localEulerAngles = new Vector3(0, -180, 0);
+            transform.transform.localEulerAngles = new Vector3(0, 0, 0);
+
+            this.snapper.SnapChild(this.name);
+            this.snapped = true;
 
             this.ovrGrabbable.Ungrab();
+            this.ovrGrabbable.enabled = false;
 
-            this.redrumSnap.SnapChild(this.name);
-            this.snapped = true;
+            if (this.bc)
+            {
+                this.bc.enabled = false;
+            }
+
+            if (this.rb)
+            {
+                this.rb.useGravity = false;
+                this.rb.isKinematic = true;
+            }
 
             if (screws)
             {
