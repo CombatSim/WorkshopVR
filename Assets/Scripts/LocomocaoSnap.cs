@@ -75,10 +75,14 @@ public class LocomocaoSnap : Snapper
     {
         var ovrGrabbable = GetComponent<OVRGrabbableShadow>();
         var rb = GetComponent<Rigidbody>();
-        var bc = GetComponent<BoxCollider>();
+        var bcs = GetComponents<BoxCollider>();
 
         ovrGrabbable.enabled = true;
-        bc.enabled = true;
+
+        foreach (var bc in bcs)
+        {
+            bc.enabled = true;
+        }
 
         rb.useGravity = true;
         rb.isKinematic = false;

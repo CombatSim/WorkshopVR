@@ -611,7 +611,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 32929008}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.05
   m_Height: 0.3
@@ -2108,7 +2108,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 138942370}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.05
   m_Height: 0.3
@@ -9891,7 +9891,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 822303340}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.02
   m_Height: 0.02
@@ -12665,7 +12665,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1066190263}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.02
   m_Height: 0.02
@@ -15314,10 +15314,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.02
-  m_Height: 0.3
+  m_Radius: 0.019999975
+  m_Height: 0.27982038
   m_Direction: 0
-  m_Center: {x: -1.6763725, y: 2.0103536, z: 2.6528955}
+  m_Center: {x: -1.6288058, y: 2.0103536, z: 2.6528952}
 --- !u!1 &1285939798
 GameObject:
   m_ObjectHideFlags: 0
@@ -21335,12 +21335,12 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1936765820}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.02
-  m_Height: 0.3
+  m_Radius: 0.019999975
+  m_Height: 0.28558594
   m_Direction: 0
-  m_Center: {x: 0.67253965, y: 2.029543, z: 2.650499}
+  m_Center: {x: 0.69704384, y: 2.029543, z: 2.650499}
 --- !u!54 &1936765822
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -21865,7 +21865,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974638531}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.02
   m_Height: 0.3
@@ -23277,10 +23277,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.02
-  m_Height: 0.3
+  m_Radius: 0.019999975
+  m_Height: 0.30000007
   m_Direction: 0
-  m_Center: {x: -0.25637302, y: 2.0273533, z: 2.652942}
+  m_Center: {x: -0.3163488, y: 2.0273533, z: 2.652942}
 --- !u!54 &2102357617
 Rigidbody:
   m_ObjectHideFlags: 0
