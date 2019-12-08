@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Boo.Lang;
 using UnityEngine;
@@ -6,37 +7,40 @@ using UnityEngine.UI;
 
 public class ObjectDescriber : MonoBehaviour
 {
-	private Hashtable objectDescriptions = new Hashtable();
+    public Texture[] arrayImages;
+    public RawImage rawImage;
 
+    Dictionary<string, Tuple<string, string, int>> dict = new Dictionary<string, Tuple<string, string, int>>();
 
-	private void Start()
-	{
-		objectDescriptions.Add("Cube", "Connect with the sphere or the Cylinder");
-		objectDescriptions.Add("Sphere", "Connect with the Cube");
-		objectDescriptions.Add("Cylinder", "Connect with the Cube");
+    private void Start()
+    {
+        dict.Add("MancalEsq", Tuple.Create("titulo", "texto", 0));
+        dict.Add("MancalDir", Tuple.Create("titulo", "texto", 1));
     }
-	private void Update()
-	{
 
-		if (Input.GetMouseButtonDown(0))
-		{
-			RaycastHit hit;
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    private void Update()
+    {
 
-			if (Physics.Raycast(ray, out hit, 100.0f))
-			{
-				if (hit.transform != null)
-				{
-					print(hit.transform.gameObject.name);
-					GetComponent<Text>().text = "Object: " + hit.transform.gameObject.name.ToString() + "\nInformation: " + objectDescriptions[hit.transform.gameObject.name.ToString()];
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-				}
-			}
-		}
-	}
+            if (Physics.Raycast(ray, out hit, 100.0f))
+            {
+                if (hit.transform != null)
+                {
+                    print(hit.transform.gameObject.name);
 
-	private void PrintName(GameObject go)
-	{
-		print(go.name);
-	}
+                    GetComponent<Text>().text = "Object: " + dict[hit.transform.gameObject.name.ToString()].Item1 + "\nInformation: " + dict[hit.transform.gameObject.name.ToString()].Item2;
+                    rawImage.texture = arrayImages[dict[hit.transform.gameObject.name.ToString()].Item3];
+                }
+            }
+        }
+    }
+
+    private void PrintName(GameObject go)
+    {
+        print(go.name);
+    }
 }
