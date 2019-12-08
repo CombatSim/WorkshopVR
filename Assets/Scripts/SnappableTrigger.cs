@@ -38,13 +38,11 @@ public class SnappableTrigger : MonoBehaviour
         }
 
         this.snapped = false;
-
-        print("Starting Snappable for " + this.name);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        print(other.name + " | " + this.snapper.name);
+        Debug.Log(other.name + " | " + this.snapper.name);
     }
 
     private void OnTriggerStay(Collider other)
