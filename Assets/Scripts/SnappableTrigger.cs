@@ -8,14 +8,14 @@ public class SnappableTrigger : MonoBehaviour
     public GameObject screws;
     public Collider targetCollider;
 
-    public float angularSnapTolerance = 10f;
-    public float colliderPercTolerance = 0.8f;
+    public float angularSnapTolerance = 90f;
+    public float colliderPercTolerance = 0.7f;
     public bool snapped;
 
     public float angularDist;
     public float percentage;
 
-    private Snapper snapper;
+    public Snapper snapper;
     private OVRGrabbableShadow ovrGrabbable;
     private Rigidbody rb;
     private Collider[] colliders;
@@ -26,7 +26,7 @@ public class SnappableTrigger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.snapper = GetComponentInParent<Snapper>();
+        // this.snapper = GetComponentInParent<Snapper>();
         this.ovrGrabbable = GetComponent<OVRGrabbableShadow>();
         this.rb = GetComponent<Rigidbody>();
         this.colliders = GetComponents<Collider>();
@@ -73,25 +73,43 @@ public class SnappableTrigger : MonoBehaviour
                 this.rb.isKinematic = true;
             }
 
-            this.tempPoint = new GameObject();
-            this.tempPoint.transform.position = GetComponent<Renderer>().bounds.center;
-            this.tempPoint.transform.SetParent(this.originalParent.transform);
+            var renderer = GetComponent<Renderer>();
 
-            transform.SetParent(this.tempPoint.transform);
-
-            this.tempPoint.transform.DOLocalRotate(Quaternion.Inverse(transform.localRotation).eulerAngles, 0.3f).OnComplete(() =>
+            if (renderer)
             {
-                transform.SetParent(this.originalParent.transform);
-                Destroy(this.tempPoint);
+                this.tempPoint = new GameObject();
+                this.tempPoint.transform.position = renderer.bounds.center;
+                this.tempPoint.transform.SetParent(this.originalParent.transform);
 
-                transform.DOLocalMove(Vector3.zero, 0.5f).OnComplete(() =>
+                transform.SetParent(this.tempPoint.transform);
+
+                this.tempPoint.transform.DOLocalRotate(Quaternion.Inverse(transform.localRotation).eulerAngles, 0.3f).OnComplete(() =>
                 {
-                    if (screws)
+                    transform.SetParent(this.originalParent.transform);
+                    Destroy(this.tempPoint);
+
+                    transform.DOLocalMove(Vector3.zero, 0.5f).OnComplete(() =>
                     {
-                        screws.SetActive(true);
-                    }
+                        if (screws)
+                        {
+                            screws.SetActive(true);
+                        }
+
+                        this.enabled = false;
+                    });
                 });
-            });
+            }
+            else
+            {
+                transform.localPosition = Vector3.zero;
+                transform.localRotation = Quaternion.Euler(Vector3.zero);
+
+                if (screws)
+                {
+                    screws.SetActive(true);
+                }
+                this.enabled = false;
+            }
         }
     }
 

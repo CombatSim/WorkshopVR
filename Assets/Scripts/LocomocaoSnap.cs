@@ -20,26 +20,27 @@ public class LocomocaoSnap : Snapper
 
     override public bool CanSnapChild(string name)
     {
-        print("Checking if " + name + " can snap: " + name.StartsWith("CuboRoda"));
+        bool CanSnap = false;
 
         if (name.StartsWith("Roda"))
         {
-            return cubo;
+            CanSnap = cubo;
         }
         else if (name.StartsWith("CuboRoda"))
         {
-            return true;
+            CanSnap = true;
         }
         else if (name.StartsWith("Calota"))
         {
-            return roda;
+            CanSnap = roda;
         }
         else if (name.StartsWith("MotorLoc"))
         {
-            return true;
+            CanSnap = true;
         }
 
-        return false;
+        Debug.Log("[LocSnap] Checking if " + name + " can snap: " + CanSnap);
+        return CanSnap;
     }
 
     void Update()

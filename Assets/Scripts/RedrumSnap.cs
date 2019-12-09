@@ -4,48 +4,52 @@ using UnityEngine;
 
 public class RedrumSnap : Snapper
 {
-    public static bool MancalEsq_Placed;
-    public static bool MancalDir_Placed;
-    public static bool EixoArma_Placed;
-    public static bool ParedeTras_Placed;
-    public static bool ParedeEsq_Placed;
-    public static bool ParedeDir_Placed;
-    public static bool tampa_Placed;
-    public static bool PezinhoEsq_Placed;
-    public static bool PezinhoDir_Placed;
-    public static bool PlacaDir2_Placed;
-    public static bool PlacaEsq_Placed;
-    public static bool BateriaEsq_Placed;
-    public static bool BateriaDir_Placed;
-    public static bool ProtecaoDir_Placed;
-    public static bool ProtecaoEsq_Placed;
-    public static bool PlacaDir1_Placed;
-    public static bool SistemaArma_Placed;
-    public static bool LocomocaoDir_Placed;
-    public static bool LocomocaoEsq_Placed;
+    public static bool mancalEsq;
+    public static bool mancalDir;
+    public static bool paredeTras;
+    public static bool paredeEsq;
+    public static bool paredeDir;
+    public static bool paredeCentro;
+    public static bool paredeCentro2;
+    public static bool tampa;
+    public static bool pezinhoEsq;
+    public static bool pezinhoDir;
+    public static bool placaDir2;
+    public static bool placaEsq;
+    public static bool bateriaEsq;
+    public static bool bateriaDir;
+    public static bool protecaoDir;
+    public static bool protecaoEsq;
+    public static bool placaDir1;
+    public static bool motorArma;
+    public static bool tambor;
+    public static bool locDir;
+    public static bool locEsq;
 
     // Start is called before the first frame update
     void Start()
     {
-        MancalDir_Placed = false;
-        MancalEsq_Placed = false;
-        EixoArma_Placed = false;
-        ParedeTras_Placed = false;
-        ParedeEsq_Placed = false;
-        ParedeDir_Placed = false;
-        tampa_Placed = false;
-        PezinhoEsq_Placed = false;
-        PezinhoDir_Placed = false;
-        PlacaDir2_Placed = false;
-        PlacaEsq_Placed = false;
-        BateriaEsq_Placed = false;
-        BateriaDir_Placed = false;
-        ProtecaoDir_Placed = false;
-        ProtecaoEsq_Placed = false;
-        PlacaDir1_Placed = false;
-        SistemaArma_Placed = false;
-        LocomocaoDir_Placed = false;
-        LocomocaoEsq_Placed = false;
+        mancalDir = false;
+        mancalEsq = false;
+        paredeTras = false;
+        paredeEsq = false;
+        paredeDir = false;
+        paredeCentro = false;
+        paredeCentro2 = false;
+        tampa = false;
+        pezinhoEsq = false;
+        pezinhoDir = false;
+        placaDir2 = false;
+        placaEsq = false;
+        bateriaEsq = false;
+        bateriaDir = false;
+        protecaoDir = false;
+        protecaoEsq = false;
+        placaDir1 = false;
+        motorArma = false;
+        tambor = false;
+        locDir = false;
+        locEsq = false;
     }
 
     // Update is called once per frame
@@ -56,87 +60,142 @@ public class RedrumSnap : Snapper
 
     override public bool CanSnapChild(string name)
     {
+        bool CanSnap = false;
 
-        return true;
+        if (name.StartsWith("Mancal"))
+        {
+            CanSnap = true;
+        }
+        else if (name.StartsWith("ParedeTras"))
+        {
+            CanSnap = paredeCentro;
+        }
+        else if (name.StartsWith("ParedeCentro"))
+        {
+            CanSnap = true;
+        }
+        else if (name.StartsWith("Locomocao"))
+        {
+            CanSnap = true;
+        }
+        else if (name.StartsWith("MotorArma"))
+        {
+            CanSnap = paredeCentro2;
+        }
+        else if (name.StartsWith("ParedeEsq") || name.StartsWith("ParedeDir"))
+        {
+            CanSnap = locDir && locEsq && paredeTras && mancalDir && mancalEsq && paredeCentro && paredeCentro2 && motorArma;
+        }
+        else if (name.StartsWith("Tambor"))
+        {
+            CanSnap = paredeEsq && paredeDir;
+        }
+        else if (name.StartsWith("Pezinho"))
+        {
+            CanSnap = paredeDir && paredeEsq;
+        }
+        else if (name.StartsWith("Placa") || name.StartsWith("Bateria"))
+        {
+            CanSnap = tambor;
+        }
+        else if (name.StartsWith("tampa"))
+        {
+            CanSnap = placaDir1 && placaDir2 && bateriaDir && bateriaEsq && placaEsq;
+        }
+        else if (name.StartsWith("Protecao"))
+        {
+            CanSnap = tampa;
+        }
+
+        Debug.Log("[RedrSnap] Checking if " + name + " can snap: " + CanSnap);
+        return CanSnap;
     }
 
     override public void SnapChild(string name)
     {
         if (name == "MancalDir")
         {
-            MancalDir_Placed = true;
-        }
-        else if (name == "EixoArma")
-        {
-            EixoArma_Placed = true;
+            mancalDir = true;
         }
         else if (name == "ParedeTras")
         {
-            ParedeTras_Placed = true;
+            paredeTras = true;
         }
         else if (name == "ParedeEsq")
         {
-            ParedeEsq_Placed = true;
+            paredeEsq = true;
         }
         else if (name == "ParedeDir")
         {
-            ParedeDir_Placed = true;
+            paredeDir = true;
         }
         else if (name == "tampa")
         {
-            tampa_Placed = true;
+            tampa = true;
         }
         else if (name == "PezinhoEsq")
         {
-            PezinhoEsq_Placed = true;
+            pezinhoEsq = true;
         }
         else if (name == "MancalEsq")
         {
-            MancalEsq_Placed = true;
+            mancalEsq = true;
         }
         else if (name == "PezinhoDir")
         {
-            PezinhoDir_Placed = true;
+            pezinhoDir = true;
         }
         else if (name == "PlacaDir2")
         {
-            PlacaDir2_Placed = true;
+            placaDir2 = true;
         }
         else if (name == "PlacaEsq")
         {
-            PlacaEsq_Placed = true;
+            placaEsq = true;
         }
         else if (name == "BateriaEsq")
         {
-            BateriaEsq_Placed = true;
+            bateriaEsq = true;
         }
         else if (name == "BateriaDir")
         {
-            BateriaDir_Placed = true;
+            bateriaDir = true;
         }
         else if (name == "ProtecaoDir")
         {
-            ProtecaoDir_Placed = true;
+            protecaoDir = true;
         }
         else if (name == "ProtecaoEsq")
         {
-            ProtecaoEsq_Placed = true;
+            protecaoEsq = true;
         }
         else if (name == "PlacaDir1")
         {
-            PlacaDir1_Placed = true;
+            placaDir1 = true;
         }
-        else if (name == "SistemaArma")
+        else if (name == "MotorArma")
         {
-            SistemaArma_Placed = true;
+            motorArma = true;
         }
         else if (name == "LocomocaoDir")
         {
-            LocomocaoDir_Placed = true;
+            locDir = true;
         }
         else if (name == "LocomocaoEsq")
         {
-            LocomocaoEsq_Placed = true;
+            locEsq = true;
+        }
+        else if (name == "ParedeCentro")
+        {
+            paredeCentro = true;
+        }
+        else if (name == "ParedeCentro2")
+        {
+            paredeCentro2 = true;
+        }
+        else if (name == "Tambor")
+        {
+            tambor = true;
         }
     }
 }

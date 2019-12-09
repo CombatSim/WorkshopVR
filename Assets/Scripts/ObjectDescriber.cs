@@ -14,8 +14,8 @@ public class ObjectDescriber : MonoBehaviour
 
     private void Start()
     {
-        dict.Add("MancalEsq", Tuple.Create("titulo", "texto", 0));
-        dict.Add("MancalDir", Tuple.Create("titulo", "texto", 1));
+        dict.Add("MancalEsq", Tuple.Create("Mancal Esquerdo", "Serve para blabla", 0));
+        dict.Add("MancalDir", Tuple.Create("Mancal Direito", "Serve para blabla", 1));
     }
 
     private void Update()
