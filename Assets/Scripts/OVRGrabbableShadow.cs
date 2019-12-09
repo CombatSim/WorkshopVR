@@ -7,6 +7,7 @@ public class OVRGrabbableShadow : OVRGrabbable
     public GameObject upInd;
 
     private Snapper snapper;
+    private ObjectDescriber objectDescriber;
 
     protected override void Start()
     {
@@ -26,6 +27,7 @@ public class OVRGrabbableShadow : OVRGrabbable
         }
 
         this.snapper = transform.parent.GetComponent<Snapper>();
+        this.objectDescriber = GameObject.Find("OBJDESC").GetComponent<ObjectDescriber>();
 
         base.Start();
     }
@@ -53,6 +55,8 @@ public class OVRGrabbableShadow : OVRGrabbable
             this.upInd.SetActive(true);
         }
 
+        this.objectDescriber.UpdateDesc(this.name);
+
         base.GrabBegin(hand, grabPoint);
     }
 
@@ -72,6 +76,8 @@ public class OVRGrabbableShadow : OVRGrabbable
         {
             this.upInd.SetActive(false);
         }
+
+        this.objectDescriber.Reset();
 
         base.GrabEnd(linearVelocity, angularVelocity);
     }
